@@ -6,10 +6,32 @@
     "steam": true,
     "epic": true,
     "gog": true,
-    "steam_search_results": 120,
-    "steam_enrich_limit": 36,
-    "gog_pages": 3,
-    "epic_paid_pages": 2
+    "steam_search_results": 140,
+    "steam_top_seller_results": 80,
+    "steam_cheap_special_results": 100,
+    "steam_publisher_results": 30,
+    "steam_enrich_limit": 64,
+    "publisher_watchlist": [
+      "Electronic Arts",
+      "Capcom",
+      "SEGA",
+      "Ubisoft",
+      "2K",
+      "Rockstar Games",
+      "Bandai Namco Entertainment",
+      "Square Enix",
+      "Bethesda Softworks",
+      "Xbox Game Studios",
+      "PlayStation Publishing LLC",
+      "Warner Bros. Games",
+      "THQ Nordic",
+      "Focus Entertainment",
+      "Devolver Digital",
+      "Annapurna Interactive",
+      "Paradox Interactive"
+    ],
+    "gog_pages": 4,
+    "epic_paid_pages": 3
   },
   "filters": {
     "preferred_genres": [
@@ -29,13 +51,18 @@
     ],
     "max_price_inr": 1500,
     "min_paid_discount_percent": 50,
-    "min_review_percent": 75,
-    "min_review_count": 200,
-    "min_quality_score": 52,
-    "min_deal_score": 62,
-    "send_wait_verdicts": true,
-    "max_wait_alerts_per_run": 1,
-    "max_alerts_per_run": 8,
+    "min_review_percent": 72,
+    "min_review_count": 500,
+    "reliable_review_count": 1000,
+    "min_paid_quality_score": 58,
+    "min_giveaway_quality_score": 62,
+    "min_deal_score": 64,
+    "send_wait_verdicts": false,
+    "max_wait_alerts_per_run": 0,
+    "max_alerts_per_run": 6,
+    "publisher_event_min_offers": 3,
+    "publisher_event_min_discount": 65,
+    "absence_grace_hours": 168,
     "blocked_title_terms": [
       "soundtrack",
       "artbook",
@@ -51,6 +78,8 @@
   },
   "alerts": {
     "include_cover_images": true,
-    "username": "Game Deal Notifier"
+    "username": "Game Deal Notifier",
+    "batch_alerts": true,
+    "max_embeds_per_message": 6
   }
 }
