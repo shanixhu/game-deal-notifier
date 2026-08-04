@@ -1,4 +1,4 @@
-name: PC Game Deal Scout
+name: Game Deal Notifier
 
 on:
   schedule:
@@ -23,7 +23,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: pc-game-deal-scout
+  group: game-deal-notifier
   cancel-in-progress: false
 
 env:
