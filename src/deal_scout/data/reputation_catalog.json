@@ -1,0 +1,598 @@
+{
+  "trusted_publishers_and_developers": [
+    "Remedy Entertainment",
+    "Capcom",
+    "CD PROJEKT RED",
+    "FromSoftware",
+    "Devolver Digital",
+    "Annapurna Interactive",
+    "Supergiant Games",
+    "Larian Studios",
+    "SEGA",
+    "Atlus",
+    "Square Enix",
+    "Bandai Namco",
+    "Bethesda",
+    "Arkane Studios",
+    "Obsidian Entertainment",
+    "Klei Entertainment",
+    "11 bit studios",
+    "Humble Games",
+    "Raw Fury",
+    "Focus Entertainment",
+    "Frictional Games",
+    "Team Cherry",
+    "Playdead",
+    "Tarsier Studios",
+    "Mobius Digital",
+    "ZA/UM",
+    "Motion Twin",
+    "Coffee Stain",
+    "Paradox Interactive",
+    "IO Interactive",
+    "Nightdive Studios",
+    "Bloober Team",
+    "Creative Assembly",
+    "Techland",
+    "Rockstar Games",
+    "2K",
+    "Deep Silver",
+    "THQ Nordic",
+    "Kepler Interactive",
+    "New Blood Interactive",
+    "Finji",
+    "Subset Games",
+    "ConcernedApe",
+    "Re-Logic",
+    "Unknown Worlds Entertainment",
+    "Red Hook Studios",
+    "Supermassive Games",
+    "Double Fine",
+    "Respawn Entertainment",
+    "Valve"
+  ],
+  "games": [
+    {
+      "title": "Control",
+      "aliases": [
+        "Control Ultimate Edition"
+      ],
+      "reason": "A highly regarded supernatural action game praised for atmosphere, environmental storytelling, and fluid combat.",
+      "boost": 16
+    },
+    {
+      "title": "SIGNALIS",
+      "aliases": [],
+      "reason": "A cult-favourite survival-horror game known for oppressive atmosphere, striking art direction, and emotionally layered storytelling.",
+      "boost": 17
+    },
+    {
+      "title": "Outer Wilds",
+      "aliases": [],
+      "reason": "An acclaimed exploration mystery built around discovery, curiosity, and an unusually cohesive world design.",
+      "boost": 17
+    },
+    {
+      "title": "The Long Dark",
+      "aliases": [],
+      "reason": "A respected survival game valued for its lonely atmosphere, resource tension, and thoughtful sandbox design.",
+      "boost": 14
+    },
+    {
+      "title": "OMORI",
+      "aliases": [],
+      "reason": "A widely praised story-driven RPG with memorable characters, surreal imagery, and heavy emotional themes.",
+      "boost": 15
+    },
+    {
+      "title": "Little Nightmares",
+      "aliases": [],
+      "reason": "A visually distinctive atmospheric horror-platformer with strong environmental storytelling and creature design.",
+      "boost": 14
+    },
+    {
+      "title": "Little Nightmares II",
+      "aliases": [],
+      "reason": "A polished cinematic horror-platformer praised for its unsettling world, animation, and visual storytelling.",
+      "boost": 14
+    },
+    {
+      "title": "SOMA",
+      "aliases": [],
+      "reason": "One of the most respected narrative horror games, combining existential science fiction with tense underwater exploration.",
+      "boost": 17
+    },
+    {
+      "title": "Alien: Isolation",
+      "aliases": [],
+      "reason": "A benchmark for licensed survival horror, especially respected for its atmosphere, sound design, and adaptive enemy AI.",
+      "boost": 16
+    },
+    {
+      "title": "Resident Evil 2",
+      "aliases": [
+        "Resident Evil 2 Remake"
+      ],
+      "reason": "A critically acclaimed survival-horror remake with excellent pacing, level design, and replay value.",
+      "boost": 16
+    },
+    {
+      "title": "Resident Evil 4",
+      "aliases": [
+        "Resident Evil 4 Remake"
+      ],
+      "reason": "A highly acclaimed action-horror game with exceptional combat pacing and production quality.",
+      "boost": 16
+    },
+    {
+      "title": "Resident Evil 7 biohazard",
+      "aliases": [],
+      "reason": "A major return to focused survival horror, praised for tension, immersion, and strong early-game design.",
+      "boost": 15
+    },
+    {
+      "title": "Resident Evil Village",
+      "aliases": [],
+      "reason": "A polished action-horror adventure with memorable locations, strong presentation, and varied encounters.",
+      "boost": 14
+    },
+    {
+      "title": "Alan Wake",
+      "aliases": [
+        "Alan Wake Remastered"
+      ],
+      "reason": "A cult supernatural thriller known for its atmosphere, episodic storytelling, and distinctive setting.",
+      "boost": 14
+    },
+    {
+      "title": "Alan Wake 2",
+      "aliases": [],
+      "reason": "An acclaimed psychological horror game celebrated for ambitious storytelling, art direction, and audiovisual design.",
+      "boost": 18
+    },
+    {
+      "title": "INSIDE",
+      "aliases": [],
+      "reason": "A concise, acclaimed puzzle-platformer with exceptional visual storytelling, animation, and atmosphere.",
+      "boost": 16
+    },
+    {
+      "title": "LIMBO",
+      "aliases": [],
+      "reason": "An influential minimalist puzzle-platformer remembered for its stark art style and environmental storytelling.",
+      "boost": 13
+    },
+    {
+      "title": "Disco Elysium",
+      "aliases": [
+        "Disco Elysium - The Final Cut"
+      ],
+      "reason": "A landmark narrative RPG praised for writing, role-playing depth, and an unusually reactive world.",
+      "boost": 18
+    },
+    {
+      "title": "Hades",
+      "aliases": [],
+      "reason": "An acclaimed action roguelike with responsive combat, excellent character writing, and rewarding progression.",
+      "boost": 17
+    },
+    {
+      "title": "Hades II",
+      "aliases": [],
+      "reason": "A highly regarded action roguelike sequel with refined combat, strong presentation, and substantial replay value.",
+      "boost": 15
+    },
+    {
+      "title": "Hollow Knight",
+      "aliases": [],
+      "reason": "A modern metroidvania classic praised for exploration, atmosphere, combat, and remarkable value.",
+      "boost": 18
+    },
+    {
+      "title": "Celeste",
+      "aliases": [],
+      "reason": "A celebrated precision platformer with excellent controls, thoughtful difficulty, and a strong emotional core.",
+      "boost": 17
+    },
+    {
+      "title": "Dead Cells",
+      "aliases": [],
+      "reason": "A polished action roguelike known for responsive combat, build variety, and long-term replayability.",
+      "boost": 15
+    },
+    {
+      "title": "Slay the Spire",
+      "aliases": [],
+      "reason": "A genre-defining deck-building roguelike with deep strategy, clean design, and enormous replay value.",
+      "boost": 17
+    },
+    {
+      "title": "Baldur's Gate 3",
+      "aliases": [],
+      "reason": "A landmark modern RPG with exceptional player choice, strong performances, and deep systemic freedom.",
+      "boost": 18
+    },
+    {
+      "title": "Divinity: Original Sin 2",
+      "aliases": [],
+      "reason": "A highly acclaimed tactical RPG offering deep systems, creative problem-solving, and excellent cooperative play.",
+      "boost": 17
+    },
+    {
+      "title": "Cyberpunk 2077",
+      "aliases": [],
+      "reason": "A large-scale story-driven action RPG now widely respected for its world, characters, and major post-launch improvements.",
+      "boost": 14
+    },
+    {
+      "title": "The Witcher 3: Wild Hunt",
+      "aliases": [
+        "The Witcher 3"
+      ],
+      "reason": "A modern RPG classic known for memorable quests, strong characters, and a richly detailed world.",
+      "boost": 18
+    },
+    {
+      "title": "Red Dead Redemption 2",
+      "aliases": [],
+      "reason": "An acclaimed open-world western praised for detail, atmosphere, character writing, and technical craft.",
+      "boost": 18
+    },
+    {
+      "title": "Grand Theft Auto V",
+      "aliases": [
+        "GTA V"
+      ],
+      "reason": "A long-running open-world blockbuster with strong production values, varied missions, and broad replay appeal.",
+      "boost": 13
+    },
+    {
+      "title": "ELDEN RING",
+      "aliases": [],
+      "reason": "A landmark action RPG combining demanding combat with unusually free-form exploration and world design.",
+      "boost": 18
+    },
+    {
+      "title": "Sekiro: Shadows Die Twice",
+      "aliases": [],
+      "reason": "An acclaimed action game built around precise sword combat, focused level design, and rewarding mastery.",
+      "boost": 17
+    },
+    {
+      "title": "Dark Souls III",
+      "aliases": [],
+      "reason": "A highly respected action RPG known for challenging combat, memorable bosses, and atmospheric world design.",
+      "boost": 16
+    },
+    {
+      "title": "Prey",
+      "aliases": [
+        "Prey 2017"
+      ],
+      "reason": "A modern immersive-sim favourite praised for level design, player freedom, and its atmospheric space-station setting.",
+      "boost": 16
+    },
+    {
+      "title": "Dishonored",
+      "aliases": [],
+      "reason": "A celebrated immersive sim offering flexible stealth, expressive powers, and richly designed levels.",
+      "boost": 16
+    },
+    {
+      "title": "Dishonored 2",
+      "aliases": [],
+      "reason": "An acclaimed immersive sim with exceptional level design, multiple play styles, and strong replay value.",
+      "boost": 16
+    },
+    {
+      "title": "Deathloop",
+      "aliases": [],
+      "reason": "A stylish action immersive sim built around experimentation, route learning, and a distinctive time-loop structure.",
+      "boost": 13
+    },
+    {
+      "title": "BioShock",
+      "aliases": [
+        "BioShock Remastered"
+      ],
+      "reason": "An influential story-driven shooter remembered for its underwater setting, atmosphere, and thematic ambition.",
+      "boost": 16
+    },
+    {
+      "title": "BioShock Infinite",
+      "aliases": [],
+      "reason": "A polished narrative shooter praised for art direction, memorable set pieces, and ambitious world-building.",
+      "boost": 14
+    },
+    {
+      "title": "Mass Effect Legendary Edition",
+      "aliases": [],
+      "reason": "A respected remaster collection of a landmark science-fiction RPG trilogy with strong characters and choices.",
+      "boost": 17
+    },
+    {
+      "title": "Titanfall 2",
+      "aliases": [],
+      "reason": "A critically loved shooter with an inventive campaign, exceptional movement, and strong mechanical variety.",
+      "boost": 17
+    },
+    {
+      "title": "DOOM",
+      "aliases": [
+        "DOOM 2016"
+      ],
+      "reason": "A highly acclaimed action shooter known for aggressive combat, excellent pacing, and strong audiovisual feedback.",
+      "boost": 16
+    },
+    {
+      "title": "DOOM Eternal",
+      "aliases": [],
+      "reason": "A demanding, polished shooter with deep combat systems, exceptional mobility, and high replay value.",
+      "boost": 16
+    },
+    {
+      "title": "Dying Light",
+      "aliases": [],
+      "reason": "A popular open-world survival-horror game valued for parkour, nighttime tension, and cooperative play.",
+      "boost": 14
+    },
+    {
+      "title": "Subnautica",
+      "aliases": [],
+      "reason": "An acclaimed survival-exploration game with a memorable alien ocean, strong progression, and natural storytelling.",
+      "boost": 17
+    },
+    {
+      "title": "Subnautica: Below Zero",
+      "aliases": [],
+      "reason": "A polished survival adventure with a dense arctic world, strong exploration, and accessible progression.",
+      "boost": 13
+    },
+    {
+      "title": "Darkwood",
+      "aliases": [],
+      "reason": "A cult top-down horror game praised for oppressive atmosphere, sound design, and uncompromising survival systems.",
+      "boost": 16
+    },
+    {
+      "title": "Amnesia: The Dark Descent",
+      "aliases": [],
+      "reason": "An influential first-person horror game known for atmosphere, vulnerability, and psychological tension.",
+      "boost": 16
+    },
+    {
+      "title": "Amnesia: The Bunker",
+      "aliases": [],
+      "reason": "A highly regarded systems-driven horror game with emergent problem-solving and intense replayable tension.",
+      "boost": 15
+    },
+    {
+      "title": "Pathologic 2",
+      "aliases": [],
+      "reason": "A cult narrative survival game admired for its oppressive atmosphere, difficult choices, and unusual storytelling.",
+      "boost": 16
+    },
+    {
+      "title": "Return of the Obra Dinn",
+      "aliases": [],
+      "reason": "An acclaimed deduction game with a distinctive visual style and exceptionally satisfying investigative design.",
+      "boost": 17
+    },
+    {
+      "title": "The Case of the Golden Idol",
+      "aliases": [],
+      "reason": "A praised deduction game built around close observation, logical reconstruction, and compact mysteries.",
+      "boost": 15
+    },
+    {
+      "title": "What Remains of Edith Finch",
+      "aliases": [],
+      "reason": "A celebrated narrative adventure with inventive vignettes, elegant pacing, and memorable environmental storytelling.",
+      "boost": 16
+    },
+    {
+      "title": "Firewatch",
+      "aliases": [],
+      "reason": "A respected narrative adventure known for natural dialogue, strong art direction, and an evocative wilderness setting.",
+      "boost": 14
+    },
+    {
+      "title": "Road 96",
+      "aliases": [],
+      "reason": "A story-driven road-trip adventure valued for its atmosphere, soundtrack, and choice-based encounters.",
+      "boost": 12
+    },
+    {
+      "title": "Kentucky Route Zero",
+      "aliases": [],
+      "reason": "An acclaimed experimental narrative game admired for literary writing, surrealism, and theatrical presentation.",
+      "boost": 16
+    },
+    {
+      "title": "Night in the Woods",
+      "aliases": [],
+      "reason": "A beloved narrative adventure with strong character writing, distinctive art, and thoughtful small-town themes.",
+      "boost": 16
+    },
+    {
+      "title": "Oxenfree",
+      "aliases": [],
+      "reason": "A well-regarded supernatural narrative adventure with natural dialogue, strong atmosphere, and clever radio mechanics.",
+      "boost": 14
+    },
+    {
+      "title": "A Short Hike",
+      "aliases": [],
+      "reason": "A compact, beloved exploration game praised for warmth, freedom, and elegant low-pressure design.",
+      "boost": 15
+    },
+    {
+      "title": "Tunic",
+      "aliases": [],
+      "reason": "An acclaimed action-adventure built around discovery, secrets, and a brilliantly integrated in-game manual.",
+      "boost": 16
+    },
+    {
+      "title": "Dredge",
+      "aliases": [],
+      "reason": "A polished fishing adventure with an effective cosmic-horror atmosphere and satisfying exploration loop.",
+      "boost": 14
+    },
+    {
+      "title": "Pacific Drive",
+      "aliases": [],
+      "reason": "A distinctive survival-driving game praised for atmosphere, vehicle maintenance, and its strange exclusion-zone setting.",
+      "boost": 14
+    },
+    {
+      "title": "Need for Speed Heat",
+      "aliases": [],
+      "reason": "A popular arcade racer with a strong night-time street-racing atmosphere, accessible handling, and extensive customization.",
+      "boost": 12
+    },
+    {
+      "title": "Need for Speed Unbound",
+      "aliases": [],
+      "reason": "A stylish arcade racer with expressive presentation, deep customization, and a strong urban street-racing focus.",
+      "boost": 12
+    },
+    {
+      "title": "Assetto Corsa",
+      "aliases": [],
+      "reason": "A respected driving simulator with strong physics, extensive community support, and excellent long-term value.",
+      "boost": 14
+    },
+    {
+      "title": "Forza Horizon 4",
+      "aliases": [],
+      "reason": "A highly polished open-world racer praised for variety, accessibility, and a beautiful seasonal Britain setting.",
+      "boost": 15
+    },
+    {
+      "title": "Forza Horizon 5",
+      "aliases": [],
+      "reason": "A benchmark open-world racing game with exceptional visuals, broad car variety, and accessible handling.",
+      "boost": 15
+    },
+    {
+      "title": "Sleeping Dogs",
+      "aliases": [
+        "Sleeping Dogs: Definitive Edition"
+      ],
+      "reason": "A cult open-world action game praised for its Hong Kong setting, melee combat, and focused crime story.",
+      "boost": 16
+    },
+    {
+      "title": "Yakuza 0",
+      "aliases": [],
+      "reason": "A beloved action-adventure praised for dramatic storytelling, memorable characters, and an enormous range of side content.",
+      "boost": 17
+    },
+    {
+      "title": "Persona 5 Royal",
+      "aliases": [],
+      "reason": "An acclaimed story-driven JRPG known for stylish presentation, strong characters, and deep turn-based systems.",
+      "boost": 17
+    },
+    {
+      "title": "NieR:Automata",
+      "aliases": [],
+      "reason": "An acclaimed action RPG celebrated for music, philosophical storytelling, and inventive structural shifts.",
+      "boost": 17
+    },
+    {
+      "title": "Death Stranding",
+      "aliases": [
+        "Death Stranding Director's Cut"
+      ],
+      "reason": "A distinctive atmospheric adventure praised for world design, audiovisual craft, and unusual traversal systems.",
+      "boost": 15
+    },
+    {
+      "title": "The Stanley Parable",
+      "aliases": [
+        "The Stanley Parable: Ultra Deluxe"
+      ],
+      "reason": "A celebrated experimental comedy that plays inventively with narration, choice, and video-game structure.",
+      "boost": 16
+    },
+    {
+      "title": "Papers, Please",
+      "aliases": [],
+      "reason": "An acclaimed moral-simulation game with elegant systems, tense decisions, and remarkable narrative economy.",
+      "boost": 16
+    },
+    {
+      "title": "FTL: Faster Than Light",
+      "aliases": [],
+      "reason": "A genre-defining strategy roguelike with deep decision-making, replayability, and excellent systemic storytelling.",
+      "boost": 16
+    },
+    {
+      "title": "Into the Breach",
+      "aliases": [],
+      "reason": "An acclaimed turn-based tactics game with exceptionally clear rules, compact battles, and deep strategic replayability.",
+      "boost": 16
+    },
+    {
+      "title": "Stardew Valley",
+      "aliases": [],
+      "reason": "A modern indie classic with generous content, relaxed progression, and unusually strong long-term value.",
+      "boost": 17
+    },
+    {
+      "title": "Terraria",
+      "aliases": [],
+      "reason": "A beloved sandbox adventure with enormous content depth, exploration, building, and outstanding value.",
+      "boost": 17
+    },
+    {
+      "title": "RimWorld",
+      "aliases": [],
+      "reason": "A celebrated colony simulator known for deep systems, emergent storytelling, and near-endless replayability.",
+      "boost": 16
+    },
+    {
+      "title": "Project Zomboid",
+      "aliases": [],
+      "reason": "A respected survival sandbox with unusually detailed systems, tense long-form progression, and strong mod support.",
+      "boost": 15
+    },
+    {
+      "title": "The Forest",
+      "aliases": [],
+      "reason": "A popular survival-horror game combining exploration, base building, and unsettling cave encounters.",
+      "boost": 13
+    },
+    {
+      "title": "Sons of the Forest",
+      "aliases": [],
+      "reason": "A visually impressive survival-horror sandbox with detailed building, exploration, and cooperative play.",
+      "boost": 12
+    },
+    {
+      "title": "Vampire Survivors",
+      "aliases": [],
+      "reason": "A hugely influential minimalist action game with excellent progression, replayability, and value.",
+      "boost": 15
+    },
+    {
+      "title": "Balatro",
+      "aliases": [],
+      "reason": "An acclaimed score-building roguelike with elegant rules, powerful synergies, and exceptional replay value.",
+      "boost": 17
+    },
+    {
+      "title": "Animal Well",
+      "aliases": [],
+      "reason": "A highly acclaimed exploration puzzle game dense with secrets, layered mechanics, and elegant pixel art.",
+      "boost": 16
+    },
+    {
+      "title": "Cocoon",
+      "aliases": [],
+      "reason": "A polished puzzle adventure praised for elegant world-hopping mechanics, visual clarity, and wordless design.",
+      "boost": 15
+    }
+  ]
+}

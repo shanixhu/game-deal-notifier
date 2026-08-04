@@ -1,0 +1,56 @@
+{
+  "region": "IN",
+  "currency": "INR",
+  "timezone": "Asia/Kolkata",
+  "stores": {
+    "steam": true,
+    "epic": true,
+    "gog": true,
+    "steam_search_results": 120,
+    "steam_enrich_limit": 36,
+    "gog_pages": 3,
+    "epic_paid_pages": 2
+  },
+  "filters": {
+    "preferred_genres": [
+      "atmospheric",
+      "story rich",
+      "horror",
+      "survival",
+      "racing",
+      "automobile sim",
+      "action",
+      "rpg",
+      "role-playing",
+      "experimental",
+      "indie",
+      "psychological horror",
+      "adventure"
+    ],
+    "max_price_inr": 1500,
+    "min_paid_discount_percent": 50,
+    "min_review_percent": 75,
+    "min_review_count": 200,
+    "min_quality_score": 52,
+    "min_deal_score": 62,
+    "send_wait_verdicts": true,
+    "max_wait_alerts_per_run": 1,
+    "max_alerts_per_run": 8,
+    "blocked_title_terms": [
+      "soundtrack",
+      "artbook",
+      "wallpaper",
+      "currency pack",
+      "starter pack",
+      "skin pack",
+      "cosmetic pack",
+      "points pack",
+      "dedicated server",
+      "benchmark"
+    ]
+  },
+  "alerts": {
+    "include_cover_images": true,
+    "username": "PC Game Deal Scout"
+  }
+}
