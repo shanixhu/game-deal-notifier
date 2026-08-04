@@ -1,0 +1,90 @@
+name: PC Game Deal Scout
+
+on:
+  schedule:
+    # GitHub cron is UTC. These are 09:07 IST and 21:47 IST every day.
+    # The evening run is after Epic's weekly Thursday refresh in both US daylight
+    # and standard time without requiring timezone-sensitive cron logic.
+    - cron: "37 3 * * *"
+    - cron: "17 16 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test sends one sample message; dry-run fetches without sending; live sends real alerts"
+        required: true
+        default: test
+        type: choice
+        options:
+          - test
+          - dry-run
+          - live
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pc-game-deal-scout
+  cancel-in-progress: false
+
+env:
+  PYTHONPATH: src
+  RUN_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'live' }}
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Syntax check
+        run: python -m compileall -q src
+
+      - name: Run deal scout
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: >-
+          python -m deal_scout.cli
+          --mode "$RUN_MODE"
+          --config config.json
+          --state state/deals.json
+          --payload-output reports/last-payload.json
+
+      - name: Commit updated duplicate-prevention state
+        if: ${{ success() && env.RUN_MODE == 'live' }}
+        shell: bash
+        run: |
+          if git diff --quiet -- state/deals.json; then
+            echo "State did not change."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/deals.json
+          git commit -m "chore: update deal alert state [skip ci]"
+
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              exit 0
+            fi
+            echo "Push attempt ${attempt} failed; rebasing and retrying."
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 3))
+          done
+          echo "Could not persist state after three push attempts."
+          exit 1
