@@ -63,7 +63,7 @@ class StoreConfig:
 @dataclass(frozen=True, slots=True)
 class AlertConfig:
     include_cover_images: bool = True
-    username: str = "PC Game Deal Scout"
+    username: str = "Game Deal Notifier"
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,3 +1,3 @@
-"""PC Game Deal Scout."""
+"""Game Deal Notifier."""
 
 __version__ = "1.0.0"

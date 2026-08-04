@@ -97,7 +97,7 @@ def build_embed(offer: Offer, config: AppConfig) -> dict[str, Any]:
         "color": VERDICT_COLORS[offer.verdict],
         "fields": fields,
         "footer": {
-            "text": "PC Game Deal Scout • Indian pricing when supplied by the store • No unverified historical-low claims"
+            "text": "Game Deal Notifier • Indian pricing when supplied by the store • No unverified historical-low claims"
         },
     }
     if config.alerts.include_cover_images and offer.image_url:
@@ -119,7 +119,7 @@ def build_test_payload(config: AppConfig) -> dict[str, Any]:
         "allowed_mentions": {"parse": []},
         "embeds": [
             {
-                "title": "TEST OK — PC Game Deal Scout",
+                "title": "TEST OK — Game Deal Notifier",
                 "description": (
                     "The Discord webhook is configured correctly. This is sample data only; "
                     "no real deal was claimed or purchased."
