@@ -28,7 +28,7 @@ class HttpClient:
     def __init__(
         self,
         *,
-        user_agent: str = "PCGameDealScout/1.0 (personal GitHub Actions project)",
+        user_agent: str = "GameDealNotifier/2.0 (+https://github.com/shanixhu/game-deal-notifier)",
         timeout_seconds: float = 20.0,
         retry_policy: RetryPolicy | None = None,
         session: requests.Session | None = None,

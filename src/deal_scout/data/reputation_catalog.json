@@ -49,7 +49,20 @@
     "Supermassive Games",
     "Double Fine",
     "Respawn Entertainment",
-    "Valve"
+    "Valve",
+    "Electronic Arts",
+    "EA",
+    "EA Games",
+    "DICE",
+    "BioWare",
+    "Codemasters",
+    "Criterion Games",
+    "Hazelight Studios",
+    "Motive Studios",
+    "Ubisoft",
+    "Xbox Game Studios",
+    "PlayStation Publishing LLC",
+    "Warner Bros. Games"
   ],
   "games": [
     {
@@ -592,6 +605,82 @@
       "title": "Cocoon",
       "aliases": [],
       "reason": "A polished puzzle adventure praised for elegant world-hopping mechanics, visual clarity, and wordless design.",
+      "boost": 15
+    },
+    {
+      "title": "Need for Speed Hot Pursuit Remastered",
+      "aliases": [
+        "Need for Speed: Hot Pursuit Remastered"
+      ],
+      "reason": "A polished remaster of a respected arcade racer built around fast police chases, clean handling and excellent road design.",
+      "boost": 14
+    },
+    {
+      "title": "Dead Space",
+      "aliases": [
+        "Dead Space Remake"
+      ],
+      "reason": "An acclaimed survival-horror remake with exceptional sound design, atmosphere and tightly designed combat.",
+      "boost": 17
+    },
+    {
+      "title": "STAR WARS Jedi: Fallen Order",
+      "aliases": [
+        "Star Wars Jedi Fallen Order"
+      ],
+      "reason": "A well-regarded cinematic action-adventure with satisfying exploration, lightsaber combat and strong environmental design.",
+      "boost": 15
+    },
+    {
+      "title": "STAR WARS Jedi: Survivor",
+      "aliases": [
+        "Star Wars Jedi Survivor"
+      ],
+      "reason": "A substantial action-adventure sequel with expanded combat, exploration and character-driven storytelling.",
+      "boost": 14
+    },
+    {
+      "title": "It Takes Two",
+      "aliases": [],
+      "reason": "An acclaimed cooperative adventure celebrated for constant mechanical variety, creativity and polished two-player design.",
+      "boost": 18
+    },
+    {
+      "title": "A Way Out",
+      "aliases": [],
+      "reason": "A focused cooperative narrative game built specifically around two-player interaction and cinematic set pieces.",
+      "boost": 14
+    },
+    {
+      "title": "Battlefield 1",
+      "aliases": [],
+      "reason": "One of the most respected modern Battlefield entries, praised for atmosphere, audiovisual design and large-scale multiplayer battles.",
+      "boost": 15
+    },
+    {
+      "title": "Battlefield V",
+      "aliases": [
+        "Battlefield 5"
+      ],
+      "reason": "A polished large-scale shooter with strong movement, gunplay and visually impressive multiplayer maps.",
+      "boost": 12
+    },
+    {
+      "title": "Burnout Paradise Remastered",
+      "aliases": [],
+      "reason": "A fast, replayable open-world arcade racer with excellent crash mechanics and a strong sense of speed.",
+      "boost": 14
+    },
+    {
+      "title": "Dragon Age: Inquisition",
+      "aliases": [],
+      "reason": "A large story-driven fantasy RPG with memorable companions, broad exploration and meaningful character choices.",
+      "boost": 14
+    },
+    {
+      "title": "Command & Conquer Remastered Collection",
+      "aliases": [],
+      "reason": "A carefully restored collection of influential real-time strategy classics with substantial quality-of-life improvements.",
       "boost": 15
     }
   ]

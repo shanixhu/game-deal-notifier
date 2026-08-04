@@ -17,8 +17,9 @@ def test_deal_workflow_has_schedule_dispatch_and_minimal_write_permission() -> N
     assert "workflow_dispatch" in workflow["on"]
     crons = [entry["cron"] for entry in workflow["on"]["schedule"]]
     assert crons == ["37 3 * * *", "17 16 * * *"]
+    assert workflow["jobs"]["scan"]["steps"][0]["uses"] == "actions/checkout@v6"
     assert workflow["permissions"] == {"contents": "write"}
-    assert workflow["jobs"]["scan"]["timeout-minutes"] == "15"
+    assert workflow["jobs"]["scan"]["timeout-minutes"] == "20"
 
 
 def test_ci_workflow_is_read_only() -> None:

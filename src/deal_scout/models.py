@@ -134,6 +134,25 @@ class Offer:
             ),
         )
 
+    @property
+    def discovery_lanes(self) -> tuple[str, ...]:
+        value = self.metadata.get("discovery_lanes", ())
+        if isinstance(value, str):
+            return (value,)
+        return tuple(str(item) for item in value)
+
+    @property
+    def sale_event_name(self) -> str | None:
+        value = self.metadata.get("sale_event_name")
+        return str(value) if value else None
+
+    @property
+    def sale_event_size(self) -> int:
+        try:
+            return int(self.metadata.get("sale_event_size", 0) or 0)
+        except (TypeError, ValueError):
+            return 0
+
     def with_scores(
         self,
         *,
@@ -163,6 +182,7 @@ class Offer:
             "currency": self.currency,
             "discount_percent": self.price_drop_percent,
             "offer_type": self.offer_type.value,
+            "start_at": self.start_at.isoformat() if self.start_at else None,
             "end_at": self.end_at.isoformat() if self.end_at else None,
             "historical_low": self.historical_low,
             "near_historical_low": self.near_historical_low,
@@ -170,6 +190,8 @@ class Offer:
             "last_seen_at": now.isoformat(),
             "active": True,
         }
+        # Deadlines are deliberately excluded. Stores sometimes correct or extend an
+        # end time; that should update state silently instead of creating another alert.
         fingerprint_fields = {
             key: payload[key]
             for key in (
@@ -178,7 +200,6 @@ class Offer:
                 "normal_price_minor",
                 "discount_percent",
                 "offer_type",
-                "end_at",
                 "historical_low",
                 "near_historical_low",
                 "verdict",

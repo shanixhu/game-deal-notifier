@@ -5,7 +5,7 @@ from typing import Any
 
 from deal_scout.adapters.epic import EpicAdapter
 from deal_scout.adapters.gog import GogAdapter
-from deal_scout.adapters.steam import SteamAdapter
+from deal_scout.adapters.steam import SteamAdapter, _select_enrichment_candidates
 from deal_scout.models import OfferType
 
 
@@ -20,6 +20,9 @@ class FakeResponse:
 
 
 class SteamHttp:
+    def __init__(self) -> None:
+        self.search_params = []
+
     def get(self, url, *, params=None, headers=None, cache=False):
         if "featuredcategories" in url:
             return FakeResponse(
@@ -37,6 +40,7 @@ class SteamHttp:
                 }
             )
         if "search/results" in url:
+            self.search_params.append(dict(params or {}))
             html = """
             <a class="search_result_row" data-ds-appid="123" href="https://store.steampowered.com/app/123/">
               <img src="https://example.com/steam.jpg">
@@ -181,11 +185,14 @@ class GogHttp:
 
 
 def test_steam_adapter_with_mocked_network(config) -> None:
-    offers = SteamAdapter(SteamHttp(), config).fetch_offers()
+    http = SteamHttp()
+    offers = SteamAdapter(http, config).fetch_offers()
     assert len(offers) == 1
     assert offers[0].offer_type == OfferType.FREE_TO_KEEP
     assert offers[0].review_percent == 90
     assert offers[0].current_price_minor == 0
+    assert any(call.get("publisher") == "Electronic Arts" for call in http.search_params)
+    assert any(call.get("filter") == "topsellers" for call in http.search_params)
 
 
 def test_epic_adapter_with_mocked_network(config) -> None:
@@ -200,3 +207,35 @@ def test_gog_adapter_with_mocked_network(config) -> None:
     assert len(offers) == 1
     assert offers[0].discount_percent == 80
     assert offers[0].review_percent == 92
+
+
+def test_steam_candidate_selection_reserves_publisher_sale_rows() -> None:
+    rows = []
+    for index in range(8):
+        rows.append(
+            {
+                "app_id": f"global-{index}",
+                "title": f"Global {index}",
+                "discount_percent": 95 - index,
+                "review_count": 500000 - index,
+                "review_percent": 95,
+                "current_price_minor": 10000,
+                "discovery_lanes": {"reviewed_specials", "top_selling_specials"},
+            }
+        )
+    for index in range(3):
+        rows.append(
+            {
+                "app_id": f"ea-{index}",
+                "title": f"EA Deal {index}",
+                "discount_percent": 80,
+                "review_count": 5000,
+                "review_percent": 82,
+                "current_price_minor": 20000,
+                "discovery_lanes": {"publisher:Electronic Arts"},
+            }
+        )
+
+    selected = _select_enrichment_candidates(rows, limit=5, publisher_reserve=3)
+    selected_ids = {row["app_id"] for row in selected}
+    assert {"ea-0", "ea-1", "ea-2"} <= selected_ids

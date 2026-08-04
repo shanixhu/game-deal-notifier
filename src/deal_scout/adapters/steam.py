@@ -26,56 +26,120 @@ class SteamAdapter(StoreAdapter):
     def fetch_offers(self) -> list[Offer]:
         featured_deadlines = self._fetch_featured_deadlines()
         raw_rows: dict[str, dict[str, Any]] = {}
-        max_results = max(1, self.config.stores.steam_search_results)
-        queries = (
-            {"sort_by": "Reviews_DESC", "maxprice": None},
-            {"sort_by": "Price_ASC", "maxprice": "free"},
-        )
-        for query in queries:
-            start = 0
-            while start < max_results:
-                count = min(50, max_results - start)
-                rows, total = self._fetch_search_page(
-                    start=start,
-                    count=count,
-                    sort_by=query["sort_by"],
-                    maxprice=query["maxprice"],
-                )
-                for row in rows:
-                    raw_rows.setdefault(row["app_id"], row)
-                start += count
-                if not rows or start >= total:
-                    break
-                if query["maxprice"] == "free":
-                    break
 
-        candidates = sorted(
-            raw_rows.values(),
-            key=lambda row: (
-                row.get("current_price_minor") != 0,
-                -(row.get("review_count") or 0),
-                -(row.get("discount_percent") or 0),
-            ),
-        )[: self.config.stores.steam_enrich_limit]
+        lanes = [
+            {
+                "name": "reviewed_specials",
+                "limit": self.config.stores.steam_search_results,
+                "sort_by": "Reviews_DESC",
+            },
+            {
+                "name": "top_selling_specials",
+                "limit": self.config.stores.steam_top_seller_results,
+                "filter_name": "topsellers",
+            },
+            {
+                "name": "cheap_specials",
+                "limit": self.config.stores.steam_cheap_special_results,
+                "sort_by": "Price_ASC",
+            },
+            {
+                "name": "temporary_free",
+                "limit": 50,
+                "sort_by": "Price_ASC",
+                "maxprice": "free",
+            },
+        ]
+        for lane in lanes:
+            self._collect_lane(raw_rows, **lane)
+
+        # Publisher-specific lanes prevent a large global sale from being drowned out
+        # by Steam's overall review ordering. One failed creator query is isolated.
+        for publisher in self.config.stores.publisher_watchlist:
+            self._collect_lane(
+                raw_rows,
+                name=f"publisher:{publisher}",
+                limit=self.config.stores.steam_publisher_results,
+                sort_by="Reviews_DESC",
+                publisher=publisher,
+            )
+
+        candidates = _select_enrichment_candidates(
+            list(raw_rows.values()),
+            limit=self.config.stores.steam_enrich_limit,
+            publisher_reserve=self.config.filters.publisher_event_min_offers,
+        )
 
         offers: list[Offer] = []
         for row in candidates:
             try:
                 offers.append(self._enrich(row, featured_deadlines.get(row["app_id"])))
-            except Exception as exc:  # isolate one malformed app
+            except Exception as exc:
                 LOGGER.warning("Steam app %s enrichment failed: %s", row.get("app_id"), exc)
-        LOGGER.info("Steam produced %d candidate offers", len(offers))
+        LOGGER.info(
+            "Steam discovered %d unique specials across %d lanes and enriched %d",
+            len(raw_rows),
+            len(lanes) + len(self.config.stores.publisher_watchlist),
+            len(offers),
+        )
         return offers
 
+    def _collect_lane(
+        self,
+        destination: dict[str, dict[str, Any]],
+        *,
+        name: str,
+        limit: int,
+        sort_by: str | None = None,
+        filter_name: str | None = None,
+        maxprice: str | None = None,
+        publisher: str | None = None,
+    ) -> None:
+        start = 0
+        limit = max(1, limit)
+        try:
+            while start < limit:
+                count = min(50, limit - start)
+                rows, total = self._fetch_search_page(
+                    start=start,
+                    count=count,
+                    sort_by=sort_by,
+                    filter_name=filter_name,
+                    maxprice=maxprice,
+                    publisher=publisher,
+                )
+                for row in rows:
+                    existing = destination.get(row["app_id"])
+                    if existing is None:
+                        row["discovery_lanes"] = {name}
+                        if publisher:
+                            row["watched_publishers"] = {publisher}
+                        destination[row["app_id"]] = row
+                    else:
+                        existing.setdefault("discovery_lanes", set()).add(name)
+                        if publisher:
+                            existing.setdefault("watched_publishers", set()).add(publisher)
+                start += count
+                if not rows or start >= total or maxprice == "free":
+                    break
+        except Exception as exc:
+            LOGGER.warning("Steam discovery lane %s failed: %s", name, exc)
+
     def _fetch_search_page(
-        self, *, start: int, count: int, sort_by: str, maxprice: str | None
+        self,
+        *,
+        start: int,
+        count: int,
+        sort_by: str | None,
+        filter_name: str | None,
+        maxprice: str | None,
+        publisher: str | None,
     ) -> tuple[list[dict[str, Any]], int]:
         params: dict[str, Any] = {
             "query": "",
             "start": start,
             "count": count,
             "dynamic_data": "",
-            "sort_by": sort_by,
             "specials": 1,
             "category1": 998,
             "infinite": 1,
@@ -83,8 +147,14 @@ class SteamAdapter(StoreAdapter):
             "cc": self.config.region,
             "l": "english",
         }
+        if sort_by:
+            params["sort_by"] = sort_by
+        if filter_name:
+            params["filter"] = filter_name
         if maxprice:
             params["maxprice"] = maxprice
+        if publisher:
+            params["publisher"] = publisher
         response = self.http.get(self.SEARCH_URL, params=params)
         try:
             body = response.json()
@@ -99,8 +169,7 @@ class SteamAdapter(StoreAdapter):
         soup = BeautifulSoup(html, "html.parser")
         rows: list[dict[str, Any]] = []
         for node in soup.select("a.search_result_row"):
-            app_id = node.get("data-ds-appid") or ""
-            app_id = str(app_id).split(",")[0].strip()
+            app_id = str(node.get("data-ds-appid") or "").split(",")[0].strip()
             if not app_id.isdigit():
                 continue
             title_node = node.select_one("span.title")
@@ -190,10 +259,8 @@ class SteamAdapter(StoreAdapter):
             for group in data.get("package_groups", [])
             for sub in group.get("subs", [])
         )
-        promotion_active = (
-            current == 0
-            and (normal or 0) > 0
-            and (deadline is not None or (discount or 0) == 100)
+        promotion_active = current == 0 and (normal or 0) > 0 and (
+            deadline is not None or (discount or 0) == 100
         )
         offer_type = classify_offer(
             title=title,
@@ -210,9 +277,10 @@ class SteamAdapter(StoreAdapter):
             for item in data.get("genres", [])
             if item.get("description")
         )
-        release_date = row.get("release_date")
         release_info = data.get("release_date") or {}
-        release_date = parse_date_only(release_info.get("date")) or release_date
+        release_date = parse_date_only(release_info.get("date")) or row.get("release_date")
+        publisher = _first(data.get("publishers"))
+        watched = sorted(row.get("watched_publishers", set()))
         return Offer(
             external_id=app_id,
             title=title,
@@ -229,15 +297,20 @@ class SteamAdapter(StoreAdapter):
             review_label=review_label,
             genres=genres,
             developer=_first(data.get("developers")),
-            publisher=_first(data.get("publishers")),
+            publisher=publisher or (watched[0] if watched else None),
             release_date=release_date,
             image_url=data.get("header_image") or row.get("image_url"),
             description=description,
             is_dlc=looks_like_dlc(title, product_type, categories),
             is_demo=looks_like_demo(title, product_type),
-            is_free_to_play=bool(data.get("is_free")) and (normal in (None, 0)),
+            is_free_to_play=bool(data.get("is_free")) and normal in (None, 0),
             rarity_hint=offer_type.value.startswith("Free to keep"),
-            metadata={"source": "steam_storefront", "tag_ids": row.get("tag_ids", ())},
+            metadata={
+                "source": "steam_storefront",
+                "tag_ids": row.get("tag_ids", ()),
+                "discovery_lanes": sorted(row.get("discovery_lanes", set())),
+                "watched_publishers": watched,
+            },
         )
 
     def _fetch_featured_deadlines(self) -> dict[str, datetime]:
@@ -260,6 +333,72 @@ class SteamAdapter(StoreAdapter):
         except Exception as exc:
             LOGGER.info("Steam featured deadlines unavailable: %s", exc)
         return deadlines
+
+
+def _select_enrichment_candidates(
+    rows: list[dict[str, Any]], *, limit: int, publisher_reserve: int
+) -> list[dict[str, Any]]:
+    """Reserve a few candidates per active publisher lane, then fill by merit."""
+    if limit <= 0:
+        return []
+    ordered = sorted(rows, key=_candidate_priority, reverse=True)
+    publisher_lanes = {
+        str(lane)
+        for row in ordered
+        for lane in row.get("discovery_lanes", set())
+        if str(lane).startswith("publisher:")
+    }
+    lane_groups = []
+    for lane in publisher_lanes:
+        matching = [row for row in ordered if lane in set(row.get("discovery_lanes", set()))]
+        if matching:
+            lane_groups.append((lane, matching))
+    lane_groups.sort(
+        key=lambda item: max((_candidate_priority(row) for row in item[1])),
+        reverse=True,
+    )
+
+    selected: list[dict[str, Any]] = []
+    selected_ids: set[str] = set()
+
+    def add(row: dict[str, Any]) -> None:
+        app_id = str(row.get("app_id") or "")
+        if app_id and app_id not in selected_ids and len(selected) < limit:
+            selected.append(row)
+            selected_ids.add(app_id)
+
+    reserve = max(1, publisher_reserve)
+    for _, group in lane_groups:
+        for row in group[:reserve]:
+            add(row)
+            if len(selected) >= limit:
+                return selected
+    for row in ordered:
+        add(row)
+        if len(selected) >= limit:
+            break
+    return selected
+
+
+def _candidate_priority(row: dict[str, Any]) -> tuple[float, int, int, int]:
+    lanes = set(row.get("discovery_lanes", set()))
+    discount = row.get("discount_percent") or 0
+    reviews = row.get("review_count") or 0
+    review_percent = row.get("review_percent") or 0
+    lane_bonus = 0.0
+    if any(str(lane).startswith("publisher:") for lane in lanes):
+        lane_bonus += 34.0
+    if "top_selling_specials" in lanes:
+        lane_bonus += 25.0
+    if "reviewed_specials" in lanes:
+        lane_bonus += 12.0
+    if "cheap_specials" in lanes:
+        lane_bonus += 6.0
+    if "temporary_free" in lanes:
+        lane_bonus += 4.0
+    review_signal = min(35.0, (reviews ** 0.25) * 2.4) + max(0, review_percent - 65) * 0.35
+    deal_signal = discount * 0.75
+    return (lane_bonus + review_signal + deal_signal, discount, reviews, -int(row.get("current_price_minor") or 0))
 
 
 def _text(node: Any) -> str:

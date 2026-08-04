@@ -26,6 +26,18 @@ def build_parser() -> ArgumentParser:
     return parser
 
 
+def _write_github_summary(title: str, lines: list[str]) -> None:
+    target = os.environ.get("GITHUB_STEP_SUMMARY")
+    if not target:
+        return
+    path = Path(target)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(f"## {title}\n\n")
+        for line in lines:
+            handle.write(f"- {line}\n")
+        handle.write("\n")
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     logging.basicConfig(
@@ -46,15 +58,16 @@ def main(argv: list[str] | None = None) -> int:
         sender = DiscordWebhookSender(webhook, http)
         sender.send_payload(build_test_payload(config))
         logger.info("Test notification sent successfully; no state was changed")
+        _write_github_summary("Game Deal Notifier test", ["Discord webhook accepted the test message", "No store data or state file was changed"])
         return 0
 
     if args.sample_data:
         offers = sample_offers()
-        successes, failures = 1, 0
+        successful_stores, failures = {offer.store.value for offer in offers}, 0
         logger.info("Using deterministic sample data; no store network calls will run")
     else:
-        offers, successes, failures = pipeline.fetch_live_offers()
-        if successes == 0:
+        offers, successful_stores, failures = pipeline.fetch_live_offers()
+        if not successful_stores:
             logger.error("All enabled store adapters failed; refusing to change state")
             return 3
 
@@ -65,6 +78,15 @@ def main(argv: list[str] | None = None) -> int:
             result.fetched,
             result.qualifying,
             failures,
+        )
+        _write_github_summary(
+            "Game Deal Notifier dry run",
+            [
+                f"Offers inspected: {result.fetched}",
+                f"Deals selected: {result.qualifying}",
+                f"Store adapters failed: {failures}",
+                "No Discord alerts were sent and no state was changed",
+            ],
         )
         return 0
 
@@ -77,6 +99,7 @@ def main(argv: list[str] | None = None) -> int:
         offers,
         state=StateStore(args.state),
         sender=sender,
+        successful_stores=successful_stores,
         adapter_failures=failures,
     )
     logger.info(
@@ -88,6 +111,17 @@ def main(argv: list[str] | None = None) -> int:
         result.unchanged,
         result.adapter_failures,
         result.delivery_failures,
+    )
+    _write_github_summary(
+        "Game Deal Notifier live scan",
+        [
+            f"Offers inspected: {result.fetched}",
+            f"Qualifying deals: {result.qualifying}",
+            f"New alerts sent: {result.sent}",
+            f"Ongoing offers muted: {result.unchanged}",
+            f"Store adapter failures: {result.adapter_failures}",
+            f"Discord delivery failures: {result.delivery_failures}",
+        ],
     )
     return 1 if result.delivery_failures else 0
 
